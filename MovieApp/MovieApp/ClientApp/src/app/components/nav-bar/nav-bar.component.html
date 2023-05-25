@@ -1,0 +1,20 @@
+<ejs-appbar colorMode="Primary">
+  <button
+    ejs-button
+    iconCss="e-icons e-video e-medium"
+    cssClass="e-inherit"
+    [routerLink]="['/']"
+  >
+    Movie App
+  </button>
+  <div class="e-appbar-spacer"></div>
+
+  <button
+    ejs-button
+    cssClass="e-inherit"
+    [routerLink]="['/admin/movies']"
+    [isToggle]="true"
+  >
+    Admin Panel
+  </button>
+</ejs-appbar>

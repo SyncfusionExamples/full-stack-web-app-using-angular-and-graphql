@@ -1,0 +1,20 @@
+<div class="e-card">
+  <div class="e-card-image">
+    <a [routerLink]="['/movies/details/', movie.movieId]"
+      ><img
+        class="preview-image"
+        src="Poster/{{ movie.posterPath }}"
+        alt="Movie cover image"
+    /></a>
+  </div>
+  <div class="e-card-header">
+    <div class="e-card-header-caption">
+      <div class="e-card-header-title">
+        <a [routerLink]="['/movies/details', movie.movieId]">{{
+          movie.title
+        }}</a>
+      </div>
+      <div class="e-card-sub-title">{{ movie.language }}</div>
+    </div>
+  </div>
+</div>

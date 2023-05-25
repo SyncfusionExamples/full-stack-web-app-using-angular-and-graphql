@@ -2,24 +2,44 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { HomeComponent } from './home/home.component';
 import { GraphQLModule } from './graphql.module';
+import { AppRoutingModule } from './app-routing.module';
+import { Ej2ComponentsModule } from './ej2-components/ej2-components.module';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { MovieCardComponent } from './components/movie-card/movie-card.component';
+import { MovieDetailsComponent } from './components/movie-details/movie-details.component';
+import { MovieFilterComponent } from './components/movie-filter/movie-filter.component';
+import { MovieSortComponent } from './components/movie-sort/movie-sort.component';
+import { LoginComponent } from './components/login/login.component';
+import { UserRegistrationComponent } from './components/user-registration/user-registration.component';
+import { MovieRatingComponent } from './components/movie-rating/movie-rating.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
-  declarations: [AppComponent, NavMenuComponent, HomeComponent],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    NavBarComponent,
+    MovieCardComponent,
+    MovieDetailsComponent,
+    MovieFilterComponent,
+    MovieSortComponent,
+    LoginComponent,
+    UserRegistrationComponent,
+    MovieRatingComponent,
+    PageNotFoundComponent,
+  ],
   imports: [
+    BrowserModule,
     HttpClientModule,
     FormsModule,
-    RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-    ]),
+    AppRoutingModule,
     GraphQLModule,
+    Ej2ComponentsModule,
   ],
-  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

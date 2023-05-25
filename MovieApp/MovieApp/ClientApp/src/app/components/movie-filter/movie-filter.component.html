@@ -1,0 +1,6 @@
+<ejs-listview
+  class="genre-list"
+  [dataSource]="genreList$ | async"
+  [fields]="setfield"
+  (click)="filterMovie($event)"
+></ejs-listview>

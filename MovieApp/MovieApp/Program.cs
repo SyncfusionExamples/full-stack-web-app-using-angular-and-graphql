@@ -52,6 +52,16 @@ builder.Services.AddGraphQLServer()
     .AddFiltering()
     .AddSorting();
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -64,6 +74,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+app.UseCors();
 
 var FileProviderPath = app.Environment.WebRootPath + "/Poster";
 if (!Directory.Exists(FileProviderPath))
@@ -80,6 +91,7 @@ app.UseFileServer(new FileServerOptions
 
 app.UseAuthentication();
 app.UseAuthorization();
+
 
 app.MapControllerRoute(
     name: "default",
