@@ -46,11 +46,16 @@ builder.Services.AddAuthorization(config =>
 builder.Services.AddGraphQLServer()
     .AddAuthorization()
     .AddQueryType<MovieQueryResolver>()
+    .AddTypeExtension<WatchlistQueryResolver>()
     .AddMutationType<MovieMutationResolver>()
     .AddTypeExtension<AuthMutationResolver>()
     .AddTypeExtension<WatchlistMutationResolver>()
     .AddFiltering()
-    .AddSorting();
+    .AddSorting()
+    .AddErrorFilter(error =>
+    {
+        return error;
+    });
 
 builder.Services.AddCors(options =>
 {

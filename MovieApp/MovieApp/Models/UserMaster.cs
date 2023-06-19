@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace MovieApp.Models;
+﻿namespace MovieApp.Models;
 
 public partial class UserMaster
 {

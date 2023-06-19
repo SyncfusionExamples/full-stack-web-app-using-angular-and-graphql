@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { map } from 'rxjs';
 import { Genre } from 'src/app/models/genre';
-import { FetchGenreService } from 'src/app/services/fetch-genre.service';
+import { MovieHelperService } from 'src/app/services/movie-helper.service';
 
 @Component({
   selector: 'app-movie-filter',
@@ -13,10 +13,10 @@ export class MovieFilterComponent {
   readonly defaultGenre = 'All Genres';
   allGenre: Genre = { genreId: 0, genreName: this.defaultGenre };
 
-  genreList$ = this.fetchGenreService.watch().valueChanges.pipe(
+  genreList$ = this.movieHelperService.genreList$.pipe(
     map((result) => {
-      if (result.data) {
-        return result.data.genreList.concat(this.allGenre).reverse();
+      if (result) {
+        return result.genreList.concat(this.allGenre).reverse();
       } else {
         return [];
       }
@@ -30,7 +30,7 @@ export class MovieFilterComponent {
   };
 
   constructor(
-    private readonly fetchGenreService: FetchGenreService,
+    private readonly movieHelperService: MovieHelperService,
     private readonly router: Router
   ) {}
 

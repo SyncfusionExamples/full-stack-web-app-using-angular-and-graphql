@@ -36,7 +36,6 @@ namespace MovieApp.DataAccess
                     _dbContext.Movies.Remove(movie);
                     await _dbContext.SaveChangesAsync();
 
-                    // Check this condition by deleting a movie with no poster, since poster is an optional field.
                     return movie.PosterPath;
                 }
 

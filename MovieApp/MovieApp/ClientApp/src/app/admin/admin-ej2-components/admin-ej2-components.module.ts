@@ -6,11 +6,13 @@ import { TextBoxModule } from '@syncfusion/ej2-angular-inputs';
 import { DropDownButtonModule } from '@syncfusion/ej2-angular-splitbuttons';
 import { ToastModule } from '@syncfusion/ej2-angular-notifications';
 import {
-  FilterService,
   GridModule,
   SortService,
   PageService,
+  SearchService,
 } from '@syncfusion/ej2-angular-grids';
+import { TooltipModule } from '@syncfusion/ej2-angular-popups';
+import { DropDownListModule } from '@syncfusion/ej2-angular-dropdowns';
 
 const importedModules = [
   ButtonModule,
@@ -19,11 +21,13 @@ const importedModules = [
   DropDownButtonModule,
   ToastModule,
   GridModule,
+  TooltipModule,
+  DropDownListModule,
 ];
 
 @NgModule({
   imports: [CommonModule, importedModules],
   exports: importedModules,
-  providers: [PageService, SortService, FilterService],
+  providers: [PageService, SortService, SearchService],
 })
 export class AdminEj2ComponentsModule {}

@@ -1,13 +1,18 @@
 <div class="e-card">
   <div class="e-card-image">
-    <a [routerLink]="['/movies/details/', movie.movieId]"
-      ><img
-        class="preview-image"
-        src="Poster/{{ movie.posterPath }}"
-        alt="Movie cover image"
-    /></a>
+    <ejs-tooltip id="tooltip" content="{{ movie.title }}">
+      <a [routerLink]="['/movies/details/', movie.movieId]"
+        ><img
+          class="preview-image"
+          src="Poster/{{ movie.posterPath }}"
+          alt="Movie cover image"
+      /></a>
+    </ejs-tooltip>
   </div>
   <div class="e-card-header">
+    <span class="card-rating">
+      <app-movie-rating [movieRating]="movie.rating"></app-movie-rating>
+    </span>
     <div class="e-card-header-caption">
       <div class="e-card-header-title">
         <a [routerLink]="['/movies/details', movie.movieId]">{{

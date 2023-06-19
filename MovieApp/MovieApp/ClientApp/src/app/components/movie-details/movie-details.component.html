@@ -1,1 +1,65 @@
-<p>movie-details works!</p>
+<ng-container *ngIf="movieDetails$ | async as movie; else noMovieFound">
+  <div class="col-12 title-container p-2">
+    <h2 class="m-0">Movie Details</h2>
+  </div>
+  <div class="e-card">
+    <div class="e-card-content row g-0">
+      <div class="col-md-3 col-sm-12">
+        <div class="e-card-image">
+          <img
+            class="image-width"
+            src="Poster/{{ movie.posterPath }}"
+            alt="Movie cover image"
+          />
+        </div>
+        <div *ngIf="userData$ | async as user" class="mt-2 image-width">
+          <app-add-to-watchlist
+            *ngIf="user.isLoggedIn"
+            [movieId]="movie.movieId"
+          ></app-add-to-watchlist>
+        </div>
+      </div>
+
+      <div
+        class="col-md-9 col-sm-12 d-flex flex-column justify-content-between"
+      >
+        <div>
+          <div class="d-flex justify-content-between">
+            <h1 class="">{{ movie.title }}</h1>
+            <span>
+              <app-movie-rating [movieRating]="movie.rating"></app-movie-rating>
+            </span>
+          </div>
+          <p class="my-4">{{ movie.overview }}</p>
+        </div>
+        <div class="d-flex justify-content-between">
+          <span><strong>Language</strong> : {{ movie.language }}</span>
+          <span><strong>Genre</strong> : {{ movie.genre }}</span>
+          <span
+            ><strong>Duration</strong> :
+            {{ movie.duration | convertMinToHour }}</span
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-similar-movies></app-similar-movies>
+</ng-container>
+
+<ng-template #noMovieFound>
+  <div class="d-flex flex-column align-items-center mt-4">
+    <div>
+      <h1 class="display-4">No movies found.</h1>
+    </div>
+    <div>
+      <button
+        ejs-button
+        cssClass="e-link"
+        iconCss="e-icons e-back e-medium"
+        [routerLink]="['/']"
+      >
+        Back to Home
+      </button>
+    </div>
+  </div>
+</ng-template>

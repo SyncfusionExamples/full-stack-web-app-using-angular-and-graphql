@@ -1,1 +1,139 @@
-<p>user-registration works!</p>
+<div class="row justify-content-center">
+  <div class="col-md-6 col-lg-6 col-sm-12">
+    <div
+      class="title-container p-2 d-flex align-items-center justify-content-between"
+    >
+      <h2 class="m-0">User Registration</h2>
+      <div>
+        <span class="mat-h4">Already Registered? </span>
+
+        <button ejs-button cssClass="e-primary" [routerLink]="['/login']">
+          Login
+        </button>
+      </div>
+    </div>
+    <div class="e-card">
+      <div class="e-card-content row g-0">
+        <form [formGroup]="userRegistrationForm" (ngSubmit)="registerUser()">
+          <div class="e-input-section">
+            <ejs-textbox
+              placeholder="First name"
+              cssClass="e-outline"
+              floatLabelType="Auto"
+              formControlName="firstName"
+            ></ejs-textbox>
+          </div>
+          <div
+            *ngIf="(registrationFormControl.firstName.touched || submitted)  &&
+          registrationFormControl.firstName.errors?.['required']"
+            class="e-error"
+          >
+            First Name is required.
+          </div>
+
+          <div class="e-input-section">
+            <ejs-textbox
+              placeholder="Last Name"
+              cssClass="e-outline"
+              floatLabelType="Auto"
+              formControlName="lastName"
+            ></ejs-textbox>
+          </div>
+          <div
+            *ngIf="(registrationFormControl.lastName.touched || submitted) &&
+          registrationFormControl.lastName.errors?.['required']"
+            class="e-error"
+          >
+            Last Name is required.
+          </div>
+
+          <div class="e-input-section">
+            <ejs-textbox
+              placeholder="User Name"
+              cssClass="e-outline"
+              floatLabelType="Auto"
+              formControlName="userName"
+            ></ejs-textbox>
+          </div>
+          <div
+            *ngIf="(registrationFormControl.userName.touched || submitted) &&
+          registrationFormControl.userName.errors?.['required']"
+            class="e-error"
+          >
+            User Name is required.
+          </div>
+
+          <div class="e-input-section">
+            <ejs-textbox
+              type="password"
+              placeholder="Password"
+              cssClass="e-outline"
+              floatLabelType="Auto"
+              formControlName="password"
+            ></ejs-textbox>
+          </div>
+          <div
+            *ngIf="(registrationFormControl.password.touched || submitted) &&
+            registrationFormControl.password.errors?.['required']"
+            class="e-error"
+          >
+            Password is required.
+          </div>
+          <div
+            *ngIf="registrationFormControl.password.touched &&
+            registrationFormControl.password.errors?.['invalidPassword']"
+            class="e-error"
+          >
+            Password should have minimum 8 characters, at least 1 uppercase
+            letter, 1 lowercase letter and 1 number.
+          </div>
+
+          <div class="e-input-section">
+            <ejs-textbox
+              type="password"
+              placeholder="Confirm Password"
+              cssClass="e-outline"
+              floatLabelType="Auto"
+              formControlName="confirmPassword"
+            ></ejs-textbox>
+          </div>
+          <div
+            *ngIf="(registrationFormControl.confirmPassword.touched || submitted) &&
+            registrationFormControl.confirmPassword.errors?.['required']"
+            class="e-error"
+          >
+            Confirm password is required.
+          </div>
+          <div
+            *ngIf=" registrationFormControl.confirmPassword.touched &&
+            registrationFormControl.confirmPassword.errors?.['passwordMismatch']"
+            class="e-error"
+          >
+            Passwords do not match.
+          </div>
+
+          <div class="e-input-section">
+            <ejs-dropdownlist
+              [dataSource]="data"
+              placeholder="Select gender"
+              cssClass="e-outline"
+              floatLabelType="Auto"
+              formControlName="gender"
+            ></ejs-dropdownlist>
+          </div>
+          <div
+            *ngIf="(registrationFormControl.gender.touched || submitted) &&
+            registrationFormControl.gender.errors?.['required']"
+            class="e-error"
+          >
+            Gender is required.
+          </div>
+
+          <div class="e-card-actions d-flex justify-content-end">
+            <button type="submit" ejs-button cssClass="e-info">Register</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

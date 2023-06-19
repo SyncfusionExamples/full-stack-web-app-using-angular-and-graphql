@@ -1,0 +1,13 @@
+.e-input-section {
+  margin: 10px 0;
+}
+
+.e-card-actions {
+  padding: 16px 0;
+}
+
+.preview-image {
+  max-height: 400px;
+  max-width: 200px;
+  border: 2px dashed #ababab;
+}

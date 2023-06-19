@@ -18,23 +18,13 @@ namespace MovieApp.GraphQL
             _userService = userService;
         }
 
-        [Authorize]
-        [GraphQLDescription("Get the user Watchlist.")]
-        public async Task<List<Movie>> GetWatchlist(int userId)
-        {
-            return await GetUserWatchlist(userId);
-        }
 
         [Authorize]
         [GraphQLDescription("Toggle Watchlist item.")]
         public async Task<List<Movie>> ToggleWatchlist(int userId, int movieId)
         {
             await _watchlistService.ToggleWatchlistItem(userId, movieId);
-            return await GetUserWatchlist(userId);
-        }
 
-        async Task<List<Movie>> GetUserWatchlist(int userId)
-        {
             bool user = await _userService.IsUserExists(userId);
 
             if (user)
@@ -46,6 +36,14 @@ namespace MovieApp.GraphQL
             {
                 return new List<Movie>();
             }
+        }
+
+        [Authorize]
+        [GraphQLDescription("Delete all items from Watchlist.")]
+        public async Task<int> ClearWatchlist(int userId)
+        {
+            await _watchlistService.ClearWatchlist(userId);
+            return userId;
         }
     }
 }

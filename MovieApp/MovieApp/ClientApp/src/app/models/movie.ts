@@ -6,9 +6,21 @@ export interface Movie {
   language: string;
   duration: number;
   rating: number;
-  posterPath: string;
+  posterPath: string | ArrayBuffer | null;
 }
 
 export type MovieType = {
   movieList: Movie[];
+};
+
+export type SimilarMovieType = {
+  similarMovies: Movie[];
+};
+
+export type WatchlistType = {
+  watchlist: Movie[];
+};
+
+export type ToggleWatchlistType = {
+  toggleWatchlist: Movie[];
 };

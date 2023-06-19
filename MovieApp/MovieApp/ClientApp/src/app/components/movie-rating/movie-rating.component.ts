@@ -1,10 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-movie-rating',
   templateUrl: './movie-rating.component.html',
-  styleUrls: ['./movie-rating.component.css']
+  styleUrls: ['./movie-rating.component.css'],
 })
 export class MovieRatingComponent {
+  rating = '';
 
+  @Input() set movieRating(rating: number) {
+    this.rating = rating.toPrecision(2);
+  }
 }

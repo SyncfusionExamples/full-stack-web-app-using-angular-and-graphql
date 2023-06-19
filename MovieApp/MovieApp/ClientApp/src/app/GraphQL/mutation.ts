@@ -25,3 +25,40 @@ export const DELETE_MOVIE = gql`
     deleteMovie(movieId: $movieId)
   }
 `;
+
+export const LOGIN = gql`
+  mutation login($loginData: UserLoginInput!) {
+    userLogin(userDetails: $loginData) {
+      errorMessage
+      token
+    }
+  }
+`;
+
+export const REGISTER_USER = gql`
+  mutation register($registrationData: UserRegistrationInput!) {
+    userRegistration(registrationData: $registrationData) {
+      isRegistrationSuccess
+    }
+  }
+`;
+
+export const TOGGLE_WATCHLIST = gql`
+  mutation toggleUserWatchlist($userId: Int!, $movieId: Int!) {
+    toggleWatchlist(userId: $userId, movieId: $movieId) {
+      movieId
+      title
+      posterPath
+      genre
+      rating
+      language
+      duration
+    }
+  }
+`;
+
+export const CLEAR_WATCHLIST = gql`
+  mutation clearWatchlist($userId: Int!) {
+    clearWatchlist(userId: $userId)
+  }
+`;

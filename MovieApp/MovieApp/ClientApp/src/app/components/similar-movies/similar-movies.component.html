@@ -1,0 +1,16 @@
+<ng-container *ngIf="similarMovies$ | async as movies">
+  <div class="row my-4 g-0">
+    <div class="col-12 title-container p-2">
+      <h2 class="m-0">Similar Movies</h2>
+    </div>
+    <div class="e-card">
+      <div class="e-card-content row p-3">
+        <div class="d-flex justify-content-start flex-wrap">
+          <div *ngFor="let movie of movies" class="p-1">
+            <app-movie-card [movie]="movie"></app-movie-card>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

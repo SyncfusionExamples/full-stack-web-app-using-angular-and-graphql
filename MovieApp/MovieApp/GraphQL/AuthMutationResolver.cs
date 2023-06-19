@@ -12,8 +12,6 @@ namespace MovieApp.GraphQL
     [ExtendObjectType(typeof(MovieMutationResolver))]
     public class AuthMutationResolver
     {
-        public record UserPayload(UserMaster user);
-
         readonly IUser _userService;
         readonly IConfiguration _config;
 
@@ -37,21 +35,34 @@ namespace MovieApp.GraphQL
 
             else
             {
-                return new AuthResponse { ErrorMessage = "Username or Password is incorrect." };
+                return null;
             }
         }
 
         [GraphQLDescription("Register a new user.")]
-        public async Task<UserPayload> UserRegistration([FromBody] UserMaster registrationData)
+        public async Task<RegistrationResponse> UserRegistration([FromBody] UserRegistration registrationData)
         {
-            await _userService.RegisterUser(registrationData);
-            return new UserPayload(registrationData);
-        }
+            UserMaster user = new()
+            {
+                FirstName = registrationData.FirstName,
+                LastName = registrationData.LastName,
+                Username = registrationData.Username,
+                Password = registrationData.Password,
+                Gender = registrationData.Gender,
+                UserTypeName = UserRoles.User
+            };
 
-        [GraphQLDescription("Check if the username is available.")]
-        public bool ValidateUserName(string userName)
-        {
-            return _userService.CheckUserNameAvailability(userName);
+            bool userRegistrationStatus = await _userService.RegisterUser(user);
+
+            if (userRegistrationStatus)
+            {
+                return new RegistrationResponse { IsRegistrationSuccess = true };
+            }
+            else
+            {
+                return null;
+            }
+
         }
 
         string GenerateJSONWebToken(AuthenticatedUser userInfo)

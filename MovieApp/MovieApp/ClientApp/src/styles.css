@@ -11,15 +11,16 @@
 @import "../node_modules/@syncfusion/ej2-angular-dropdowns/styles/material.css";
 @import "../node_modules/@syncfusion/ej2-angular-inputs/styles/material.css";
 @import "../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css";
-@import "../node_modules/@syncfusion/ej2-angular-popups/styles/material.css";
 @import "../node_modules/@syncfusion/ej2-angular-notifications/styles/material.css";
 @import "../node_modules/@syncfusion/ej2-icons/styles/material.css";
 @import "../node_modules/@syncfusion/ej2-angular-lists/styles/material.css";
 @import "../node_modules/@syncfusion/ej2-angular-grids/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-angular-popups/styles/material.css";
 
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: 16px;
   background-color: #fafafa;
   line-height: 1.5;
   font-kerning: normal;
@@ -31,4 +32,19 @@ body {
 
 a {
   text-decoration: none;
+}
+
+.title-container {
+  background-color: #0378d5;
+  box-shadow: 0 2px 4px -1px #0003, 0 4px 5px #00000024, 0 1px 10px #0000001f;
+
+  & h2,
+  h3 {
+    color: #fff;
+    font-weight: normal;
+  }
+}
+
+.full-width {
+  width: 100%;
 }

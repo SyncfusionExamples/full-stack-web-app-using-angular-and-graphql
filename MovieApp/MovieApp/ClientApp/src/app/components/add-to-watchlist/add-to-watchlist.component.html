@@ -1,0 +1,10 @@
+<button
+  ejs-button
+  class="full-width"
+  [ngClass]="{ 'e-warning': toggle, 'e-success': !toggle }"
+  iconCss="e-icons {{ iconClass }}"
+  mat-raised-button
+  (click)="toggleValue()"
+>
+  {{ buttonText }}
+</button>

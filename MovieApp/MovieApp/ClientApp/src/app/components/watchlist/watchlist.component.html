@@ -1,0 +1,72 @@
+<ng-container *ngIf="watchlistItems$ | async as watchlistItems">
+  <div class="my-2">
+    <div
+      class="title-container p-2 d-flex align-items-center justify-content-between"
+    >
+      <h2 class="m-0">My Watchlist</h2>
+      <div>
+        <button ejs-button cssClass="e-danger" (click)="clearWatchlist()">
+          Clear Watchlist
+        </button>
+      </div>
+    </div>
+    <ng-container *ngIf="watchlistItems.length > 0; else emptyWatchlist">
+      <div class="e-card">
+        <div class="e-card-content">
+          <ejs-grid #grid [dataSource]="watchlistItems">
+            <e-columns>
+              <e-column headerText="Poster" width="150">
+                <ng-template #template let-movieData>
+                  <ejs-tooltip id="tooltip" content="{{ movieData.title }}">
+                    <img
+                      class="my-2"
+                      src="/Poster/{{ movieData.posterPath }}"
+                    />
+                  </ejs-tooltip>
+                </ng-template>
+              </e-column>
+              <e-column headerText="Title" width="150">
+                <ng-template #template let-movieData>
+                  <a [routerLink]="['/movies/details/', movieData.movieId]">
+                    {{ movieData.title }}
+                  </a>
+                </ng-template>
+              </e-column>
+              <e-column field="genre" headerText="Genre" width="100"></e-column>
+              <e-column
+                field="language"
+                headerText="Language"
+                width="100"
+              ></e-column>
+              <e-column headerText="Operation" width="150">
+                <ng-template #template let-movieData>
+                  <ejs-tooltip content="Edit movie">
+                    <app-add-to-watchlist
+                      [movieId]="movieData.movieId"
+                    ></app-add-to-watchlist>
+                  </ejs-tooltip>
+                </ng-template>
+              </e-column>
+            </e-columns>
+          </ejs-grid>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>
+
+<ng-template #emptyWatchlist>
+  <div class="e-card">
+    <div class="e-card-content">
+      <h2 class="m-2">Your watchlist is empty.</h2>
+      <button
+        ejs-button
+        cssClass="e-link"
+        iconCss="e-icons e-back e-medium"
+        [routerLink]="['/']"
+      >
+        Back to Home
+      </button>
+    </div>
+  </div>
+</ng-template>

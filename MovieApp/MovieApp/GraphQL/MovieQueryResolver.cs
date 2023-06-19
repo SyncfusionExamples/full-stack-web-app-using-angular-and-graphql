@@ -6,10 +6,12 @@ namespace MovieApp.GraphQL
     public class MovieQueryResolver
     {
         readonly IMovie _movieService;
+        readonly IUser _userService;
 
-        public MovieQueryResolver(IMovie movieService)
+        public MovieQueryResolver(IMovie movieService, IUser userService)
         {
             _movieService = movieService;
+            _userService = userService;
         }
 
         [GraphQLDescription("Gets the list of genres.")]
@@ -31,6 +33,12 @@ namespace MovieApp.GraphQL
         public async Task<List<Movie>> GetSimilarMovies(int movieId)
         {
             return await _movieService.GetSimilarMovies(movieId);
+        }
+
+        [GraphQLDescription("Check if the username is available.")]
+        public bool GetIsUserNameAvailable(string userName)
+        {
+            return _userService.CheckUserNameAvailability(userName);
         }
     }
 }

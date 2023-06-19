@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
@@ -17,6 +17,10 @@ import { UserRegistrationComponent } from './components/user-registration/user-r
 import { MovieRatingComponent } from './components/movie-rating/movie-rating.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { HomeComponent } from './components/home/home.component';
+import { ConvertMinToHourPipe } from './pipes/convert-min-to-hour.pipe';
+import { SimilarMoviesComponent } from './components/similar-movies/similar-movies.component';
+import { WatchlistComponent } from './components/watchlist/watchlist.component';
+import { AddToWatchlistComponent } from './components/add-to-watchlist/add-to-watchlist.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +35,10 @@ import { HomeComponent } from './components/home/home.component';
     UserRegistrationComponent,
     MovieRatingComponent,
     PageNotFoundComponent,
+    ConvertMinToHourPipe,
+    SimilarMoviesComponent,
+    WatchlistComponent,
+    AddToWatchlistComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,6 +47,7 @@ import { HomeComponent } from './components/home/home.component';
     AppRoutingModule,
     GraphQLModule,
     Ej2ComponentsModule,
+    ReactiveFormsModule,
   ],
   bootstrap: [AppComponent],
 })

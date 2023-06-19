@@ -1,1 +1,73 @@
-<p>login works!</p>
+<div class="row justify-content-center">
+  <div class="col-md-6 col-lg-6 col-sm-12">
+    <div
+      class="title-container p-2 d-flex align-items-center justify-content-between"
+    >
+      <h2 class="m-0">Login</h2>
+      <div>
+        <span class="mat-h4">New User? </span>
+
+        <button
+          type="submit"
+          ejs-button
+          cssClass="e-primary"
+          [routerLink]="['/register']"
+        >
+          Register
+        </button>
+      </div>
+    </div>
+
+    <div class="e-card">
+      <div class="e-card-header" *ngIf="loginForm.errors">
+        <div class="e-card-header-caption">
+          <ejs-message
+            content="Username or Password is incorrect"
+            severity="Error"
+          ></ejs-message>
+        </div>
+      </div>
+
+      <div class="e-card-content row g-0">
+        <form [formGroup]="loginForm" (ngSubmit)="login()" novalidate>
+          <div class="e-input-section">
+            <ejs-textbox
+              placeholder="Username"
+              cssClass="e-outline"
+              floatLabelType="Auto"
+              formControlName="username"
+            ></ejs-textbox>
+          </div>
+          <div
+            *ngIf="loginFormControl.username.touched &&
+                loginFormControl.username.errors?.['required']"
+            class="e-error"
+          >
+            Username is required.
+          </div>
+
+          <div class="e-input-section">
+            <ejs-textbox
+              type="password"
+              placeholder="Password"
+              cssClass="e-outline"
+              floatLabelType="Auto"
+              formControlName="password"
+            ></ejs-textbox>
+          </div>
+          <div
+            *ngIf="loginFormControl.password.touched &&
+                loginFormControl.password.errors?.['required']"
+            class="e-error"
+          >
+            Password is required.
+          </div>
+
+          <div class="e-card-actions d-flex justify-content-end">
+            <button type="submit" ejs-button cssClass="e-success">Login</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

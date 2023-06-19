@@ -9,12 +9,59 @@
   </button>
   <div class="e-appbar-spacer"></div>
 
-  <button
-    ejs-button
-    cssClass="e-inherit"
-    [routerLink]="['/admin/movies']"
-    [isToggle]="true"
+  <ng-container *ngIf="userData$ | async as userData">
+    <button
+      ejs-button
+      [isToggle]="true"
+      cssClass="e-inherit e-round e-small"
+      *ngIf="userData.isLoggedIn"
+      [routerLink]="['/watchlist']"
+      iconCss="e-icons e-bookmark e-medium"
+      class="watchlist-btn"
+    >
+      <span
+        class="e-badge e-badge-warning e-badge-notification e-badge-overlap e-badge-circle"
+        >{{ watchlistItemcount$ | async }}</span
+      >
+    </button>
+
+    <button
+      *ngIf="!userData.isLoggedIn"
+      ejs-button
+      cssClass="e-inherit"
+      [routerLink]="['/login']"
+      [isToggle]="true"
+    >
+      Login
+    </button>
+
+    <button
+      *ngIf="userData.userTypeName == userType.Admin"
+      ejs-button
+      cssClass="e-inherit"
+      [routerLink]="['/admin/movies']"
+      [isToggle]="true"
+    >
+      Admin Panel
+    </button>
+
+    <ng-container *ngIf="userData.isLoggedIn">
+      <button
+        ejs-dropdownbutton
+        cssClass="e-inherit"
+        iconCss="e-icons e-people"
+        [items]="items"
+        content="{{ userData.username }}"
+        (select)="clickActionItem($event)"
+      ></button>
+    </ng-container>
+  </ng-container>
+
+  <a
+    class="mx-2"
+    href="https://github.com/SyncfusionExamples/full-stack-web-app-using-angular-and-graphql"
+    target="_blank"
   >
-    Admin Panel
-  </button>
+    GitHub
+  </a>
 </ejs-appbar>

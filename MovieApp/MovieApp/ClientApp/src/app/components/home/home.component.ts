@@ -10,19 +10,19 @@ import { FetchMovielistService } from 'src/app/services/fetch-movielist.service'
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent {
-  private readonly queryParams$ = this.activatedRoute.queryParams;
   private readonly movie$ = this.fetchMovielistService
-    .watch()
-    .valueChanges.pipe(map((result) => result.data));
+    .watch({
+      fetchPolicy: 'network-only',
+    })
+    .valueChanges.pipe(map((result) => result?.data));
 
-  vm$ = this.queryParams$.pipe(
+  vm$ = this.activatedRoute.queryParams.pipe(
     combineLatestWith(this.movie$),
     map(([params, movies]) => {
       let homeVm = new Vm();
 
       homeVm.selectedGenre = params['genre'];
       homeVm.selectedSort = params['sortBy'];
-      homeVm.selectedFilter = params['item'];
 
       if (homeVm.selectedGenre) {
         const filteredMovieByGenre = movies?.movieList.filter(
@@ -33,37 +33,13 @@ export class HomeComponent {
         homeVm.movieList = movies?.movieList;
       }
 
-      // Implement sort using GQL
-      if (homeVm.selectedSort) {
-        switch (homeVm.selectedSort) {
-          case 'title':
-          default:
-            homeVm.movieList.sort((a, b) => a.title.localeCompare(b.title));
-            break;
-          case 'rating':
-            homeVm.movieList.sort((a, b) => {
-              return a.rating > b.rating ? -1 : 1;
-            });
-            break;
-          case 'duration':
-            homeVm.movieList.sort((a, b) => {
-              return a.duration > b.duration ? -1 : 1;
-            });
-            break;
-        }
-      } else {
-        homeVm.movieList
-          ?.slice()
-          .sort((a, b) => a.title.localeCompare(b.title));
-      }
-
-      if (homeVm.selectedFilter) {
-        const filteredMovie = movies?.movieList.filter(
-          (movie) =>
-            movie.title.toLowerCase().indexOf(homeVm.selectedFilter) !== -1 ||
-            movie.genre.toLowerCase().indexOf(homeVm.selectedFilter) !== -1
+      if (homeVm.selectedSort && movies?.movieList) {
+        homeVm.movieList = this.sortMovie(
+          homeVm.selectedSort,
+          homeVm.movieList
         );
-        homeVm.movieList = filteredMovie;
+      } else {
+        homeVm.movieList = this.sortMovie('title', homeVm.movieList);
       }
 
       return homeVm;
@@ -74,18 +50,40 @@ export class HomeComponent {
     private readonly activatedRoute: ActivatedRoute,
     private readonly fetchMovielistService: FetchMovielistService
   ) {}
+
+  private sortMovie(sortParam: string, movieList: Movie[]): Movie[] {
+    const sortedMovieList = movieList?.slice();
+    switch (sortParam) {
+      case 'rating':
+        sortedMovieList?.sort((a, b) => {
+          return a.rating > b.rating ? -1 : 1;
+        });
+        break;
+
+      case 'duration':
+        sortedMovieList?.sort((a, b) => {
+          return a.duration > b.duration ? -1 : 1;
+        });
+        break;
+
+      case 'title':
+      default:
+        sortedMovieList?.sort((a, b) => a.title.localeCompare(b.title));
+        break;
+    }
+
+    return sortedMovieList;
+  }
 }
 
 class Vm {
   movieList: Movie[];
   selectedGenre: string;
   selectedSort: string;
-  selectedFilter: string;
 
   constructor() {
-    this.movieList = new Array<Movie>();
+    this.movieList = [];
     this.selectedGenre = '';
     this.selectedSort = '';
-    this.selectedFilter = '';
   }
 }

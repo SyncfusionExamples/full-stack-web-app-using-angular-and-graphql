@@ -1,17 +1,62 @@
-<ng-container *ngIf="movie$ | async as movies">
-  <ejs-grid
-    #grid
-    [dataSource]="movies?.movieList"
-    allowPaging="true"
-    allowSorting="true"
-    [pageSettings]="initialPage"
-  >
-    <e-columns>
-      <e-column field="title" headerText="Title" width="200"></e-column>
-      <e-column field="genre" headerText="Genre" width="150"></e-column>
-      <e-column field="language" headerText="Language" width="150"></e-column>
-      <e-column field="duration" headerText="Duration" width="150"></e-column>
-      <e-column field="rating" headerText="Rating" width="150"></e-column>
-    </e-columns>
-  </ejs-grid>
-</ng-container>
+<div class="my-2 justify-content-end d-flex">
+  <button ejs-button cssClass="e-info" [routerLink]="['/admin/movies/new']">
+    Add Movie
+  </button>
+</div>
+
+<div class="my-2">
+  <div class="title-container p-2">
+    <h2 class="m-0">All Movies</h2>
+  </div>
+
+  <div class="e-card">
+    <div class="e-card-content">
+      <ng-container *ngIf="movie$ | async as movies">
+        <ejs-grid
+          #grid
+          [dataSource]="movies?.movieList"
+          [allowPaging]="true"
+          [allowSorting]="true"
+          [pageSettings]="initialPage"
+        >
+          <e-columns>
+            <e-column field="title" headerText="Title" width="200"></e-column>
+            <e-column field="genre" headerText="Genre" width="150"></e-column>
+            <e-column
+              field="language"
+              headerText="Language"
+              width="150"
+            ></e-column>
+            <e-column
+              field="duration"
+              headerText="Duration"
+              width="150"
+            ></e-column>
+            <e-column field="rating" headerText="Rating" width="150"></e-column>
+            <e-column headerText="Operation" width="150">
+              <ng-template #template let-movieData>
+                <ejs-tooltip content="Edit movie">
+                  <button
+                    ejs-button
+                    cssClass="e-small e-round e-flat"
+                    iconCss="e-icons e-edit-4 e-medium"
+                    [isPrimary]="true"
+                    [routerLink]="['/admin/movies/', movieData.movieId]"
+                  ></button>
+                </ejs-tooltip>
+                <ejs-tooltip content="Delete movie">
+                  <button
+                    ejs-button
+                    cssClass="e-small e-round e-danger e-flat"
+                    iconCss="e-icons e-trash e-medium"
+                    (click)="deleteConfirm(movieData.movieId)"
+                  ></button>
+                </ejs-tooltip>
+              </ng-template>
+            </e-column>
+          </e-columns>
+        </ejs-grid>
+      </ng-container>
+    </div>
+  </div>
+</div>

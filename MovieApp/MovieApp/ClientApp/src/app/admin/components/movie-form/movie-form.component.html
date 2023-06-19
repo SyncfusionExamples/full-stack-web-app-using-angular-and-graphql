@@ -1,1 +1,170 @@
-<p>movie-form works!</p>
+<div class="row justify-content-center">
+  <div
+    class="title-container p-2 d-flex align-items-center justify-content-between"
+  >
+    <h2 class="m-0">{{ formTitle }} Movie</h2>
+  </div>
+
+  <div class="e-card">
+    <div class="row justify-content-start">
+      <div class="col-md-8">
+        <div class="e-card-content row g-0">
+          <form [formGroup]="movieForm" (ngSubmit)="onFormSubmit()">
+            <div class="e-input-section">
+              <ejs-textbox
+                placeholder="Title"
+                cssClass="e-outline"
+                floatLabelType="Auto"
+                formControlName="title"
+              ></ejs-textbox>
+            </div>
+            <div
+              *ngIf="(movieFormControl.title.touched || submitted)&&
+                movieFormControl.title.errors?.['required']"
+              class="e-error"
+            >
+              Title is required.
+            </div>
+
+            <div class="e-input-section">
+              <ejs-dropdownlist
+                placeholder="Genre"
+                cssClass="e-outline"
+                floatLabelType="Auto"
+                formControlName="genre"
+                [dataSource]="(genreList$ | async)?.genreList"
+                [fields]="fields"
+              >
+              </ejs-dropdownlist>
+            </div>
+            <div
+              *ngIf="(movieFormControl.genre.touched || submitted) &&
+                  movieFormControl.genre.errors?.['required']"
+              class="e-error"
+            >
+              Genre is required.
+            </div>
+
+            <div class="e-input-section">
+              <ejs-textbox
+                placeholder="Language"
+                cssClass="e-outline"
+                floatLabelType="Auto"
+                formControlName="language"
+              ></ejs-textbox>
+            </div>
+            <div
+              *ngIf="(movieFormControl.language.touched || submitted)&&
+                  movieFormControl.language.errors?.['required']"
+              class="e-error"
+            >
+              Language is required.
+            </div>
+
+            <div class="e-input-section">
+              <ejs-textbox
+                placeholder="Duration (mins)"
+                cssClass="e-outline"
+                floatLabelType="Auto"
+                formControlName="duration"
+              ></ejs-textbox>
+            </div>
+            <div
+              *ngIf="(movieFormControl.duration.touched || submitted) &&
+                    movieFormControl.duration.errors?.['required']"
+              class="e-error"
+            >
+              Duration is required.
+            </div>
+            <div
+              *ngIf="movieFormControl.duration.touched &&
+                  movieFormControl.duration.errors?.['min']"
+              class="e-error"
+            >
+              Duration cannot be less than 0.
+            </div>
+
+            <div class="e-input-section">
+              <ejs-textbox
+                placeholder="Rating"
+                cssClass="e-outline"
+                floatLabelType="Auto"
+                formControlName="rating"
+              ></ejs-textbox>
+            </div>
+            <div
+              *ngIf="(movieFormControl.rating.touched || submitted) &&
+                      movieFormControl.rating.errors?.['required']"
+              class="e-error"
+            >
+              Rating is required.
+            </div>
+            <div
+              *ngIf="
+                (movieFormControl.rating.touched || submitted) &&
+                (movieFormControl.rating.hasError('min') ||
+                  movieFormControl.rating.hasError('max'))
+              "
+              class="e-error"
+            >
+              The value should be between 0 & 10.
+            </div>
+
+            <div class="e-input-section">
+              <ejs-textbox
+                placeholder="Overview"
+                cssClass="e-outline"
+                floatLabelType="Auto"
+                formControlName="overview"
+                [multiline]="true"
+              ></ejs-textbox>
+            </div>
+            <div
+              *ngIf="(movieFormControl.overview.touched || submitted) &&
+                      movieFormControl.overview.errors?.['required']"
+              class="e-error"
+            >
+              Overview is required.
+            </div>
+            <div
+              *ngIf="movieFormControl.overview.touched &&
+                      movieFormControl.overview.errors?.['maxlength']"
+              class="e-error"
+            >
+              Overview can not be more than 1000 characters long.
+            </div>
+
+            <div class="e-card-actions d-flex justify-content-end">
+              <button type="submit" ejs-button cssClass="e-info">Save</button>
+              <button
+                type="submit"
+                ejs-button
+                cssClass="e-danger"
+                class="ms-2"
+                (click)="navigateToAdminPanel()"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-md-4 d-flex flex-column align-items-center">
+        <div class="e-card-content row g-0">
+          <img
+            class="preview-image p-2"
+            src="{{ posterImagePath }}"
+            alt="Upload an image"
+          />
+          <div class="my-2">
+            <ejs-uploader
+              #defaultupload
+              id="fileupload"
+              (selected)="uploadPoster($event)"
+            ></ejs-uploader>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

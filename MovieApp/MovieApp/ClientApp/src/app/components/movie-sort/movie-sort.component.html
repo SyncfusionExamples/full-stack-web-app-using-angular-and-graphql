@@ -1,1 +1,16 @@
-<p>movie-sort works!</p>
+<div class="row g-0 my-4">
+  <div class="col-12 title-container p-2">
+    <h3 class="m-0">Sort Movies</h3>
+  </div>
+  <div class="e-card">
+    <div class="e-card-content row p-3">
+      <ejs-dropdownlist
+        [(value)]="selectedSort"
+        [fields]="fields"
+        [dataSource]="sortOptions"
+        placeholder="Select sort parameter"
+        (change)="sortMovieData($event)"
+      ></ejs-dropdownlist>
+    </div>
+  </div>
+</div>

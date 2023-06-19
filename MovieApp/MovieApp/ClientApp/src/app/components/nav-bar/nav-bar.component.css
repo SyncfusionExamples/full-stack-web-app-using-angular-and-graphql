@@ -1,7 +1,16 @@
-ejs-appbar{
+ejs-appbar {
   position: fixed;
   top: 0;
   left: 0;
-  right: 0; 
+  right: 0;
   z-index: 999;
+}
+
+.watchlist-btn {
+  position: relative;
+  margin: 0 5px;
+}
+
+a {
+  color: #fff;
 }

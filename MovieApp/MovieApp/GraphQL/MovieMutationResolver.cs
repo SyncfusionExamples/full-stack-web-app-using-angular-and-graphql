@@ -18,7 +18,7 @@ namespace MovieApp.GraphQL
             _config = config;
             _movieService = movieService;
             _hostingEnvironment = hostingEnvironment;
-            posterFolderPath = System.IO.Path.Combine(_hostingEnvironment.ContentRootPath, "Poster");
+            posterFolderPath = System.IO.Path.Combine(_hostingEnvironment.WebRootPath, "Poster");
         }
 
         [Authorize(Policy = UserRoles.Admin)]
@@ -30,8 +30,16 @@ namespace MovieApp.GraphQL
                 string fileName = Guid.NewGuid() + ".jpg";
                 string fullPath = System.IO.Path.Combine(posterFolderPath, fileName);
 
-                byte[] imageBytes = Convert.FromBase64String(movie.PosterPath);
-                File.WriteAllBytes(fullPath, imageBytes);
+                //using (var stream = new FileStream(fullPath, FileMode.Create))
+                //{
+                //    movie.PosterPath.CopyTo(stream);
+                //}
+                using (FileStream reader = File.Create(fullPath))
+                {
+                    byte[] imageBytes = Convert.FromBase64String(movie.PosterPath);
+                    //File.WriteAllBytes(fullPath, imageBytes);
+                    reader.Write(imageBytes, 0, imageBytes.Length);
+                }
 
                 movie.PosterPath = fileName;
             }

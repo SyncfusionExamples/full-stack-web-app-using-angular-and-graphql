@@ -9,3 +9,9 @@
   max-height: 350px;
   max-width: 250px;
 }
+
+.card-rating {
+  position: absolute;
+  right: 7px;
+  top: 7px;
+}
