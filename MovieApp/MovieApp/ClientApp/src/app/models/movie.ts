@@ -6,7 +6,7 @@ export interface Movie {
   language: string;
   duration: number;
   rating: number;
-  posterPath: string | ArrayBuffer | null;
+  posterPath: string;
 }
 
 export type MovieType = {

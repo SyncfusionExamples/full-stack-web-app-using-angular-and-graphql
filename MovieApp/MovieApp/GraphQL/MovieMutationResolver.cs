@@ -1,6 +1,10 @@
-﻿using HotChocolate.Authorization;
+﻿using Azure.Core;
+using HotChocolate.Authorization;
 using MovieApp.Interfaces;
 using MovieApp.Models;
+using System.IO;
+using System.IO.Pipes;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace MovieApp.GraphQL
 {
@@ -27,21 +31,7 @@ namespace MovieApp.GraphQL
         {
             if (!string.IsNullOrEmpty(movie.PosterPath))
             {
-                string fileName = Guid.NewGuid() + ".jpg";
-                string fullPath = System.IO.Path.Combine(posterFolderPath, fileName);
-
-                //using (var stream = new FileStream(fullPath, FileMode.Create))
-                //{
-                //    movie.PosterPath.CopyTo(stream);
-                //}
-                using (FileStream reader = File.Create(fullPath))
-                {
-                    byte[] imageBytes = Convert.FromBase64String(movie.PosterPath);
-                    //File.WriteAllBytes(fullPath, imageBytes);
-                    reader.Write(imageBytes, 0, imageBytes.Length);
-                }
-
-                movie.PosterPath = fileName;
+                movie.PosterPath = WriteImageToServer(movie);
             }
             else
             {
@@ -53,7 +43,6 @@ namespace MovieApp.GraphQL
             return new AddMoviePayload(movie);
         }
 
-
         [Authorize(Policy = UserRoles.Admin)]
         [GraphQLDescription("Edit an existing movie data.")]
         public async Task<AddMoviePayload> EditMovie(Movie movie)
@@ -62,13 +51,7 @@ namespace MovieApp.GraphQL
 
             if (IsBase64String)
             {
-                string fileName = Guid.NewGuid() + ".jpg";
-                string fullPath = System.IO.Path.Combine(posterFolderPath, fileName);
-
-                byte[] imageBytes = Convert.FromBase64String(movie.PosterPath);
-                File.WriteAllBytes(fullPath, imageBytes);
-
-                movie.PosterPath = fileName;
+                movie.PosterPath = WriteImageToServer(movie);
             }
 
             await _movieService.UpdateMovie(movie);
@@ -97,6 +80,17 @@ namespace MovieApp.GraphQL
         {
             Span<byte> buffer = new(new byte[base64.Length]);
             return Convert.TryFromBase64String(base64, buffer, out int bytesParsed);
+        }
+
+        string WriteImageToServer(Movie movie)
+        {
+            string fileName = Guid.NewGuid() + ".jpg";
+            string fullPath = System.IO.Path.Combine(posterFolderPath, fileName);
+
+            byte[] imageBytes = Convert.FromBase64String(movie.PosterPath);
+            File.WriteAllBytes(fullPath, imageBytes);
+
+            return fileName;
         }
     }
 }

@@ -20,17 +20,16 @@ export class AuthenticationService {
     return this.loginService.mutate({ loginData: userLoginData }).pipe(
       map((response) => {
         if (response.data) {
-          localStorage.setItem('authToken', response.data.userLogin.token);
-          this.setUserDetails();
+          const authToken = response.data.userLogin.token;
+          localStorage.setItem('authToken', authToken);
+          this.setUserDetails(authToken);
         }
         return response;
       })
     );
   }
 
-  setUserDetails() {
-    const authToken = localStorage.getItem('authToken');
-
+  setUserDetails(authToken: string) {
     if (authToken != null) {
       const userDetails = new User();
       const decodeUserDetails = JSON.parse(

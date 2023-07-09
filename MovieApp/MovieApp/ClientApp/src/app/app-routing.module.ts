@@ -11,7 +11,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
-  { path: 'filter', title: 'home page', component: HomeComponent },
+  { path: 'filter', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: UserRegistrationComponent },
   { path: 'movies/details/:movieId', component: MovieDetailsComponent },
@@ -24,7 +24,6 @@ const appRoutes: Routes = [
     path: 'admin/movies',
     loadChildren: () =>
       import('./admin/admin.module').then((module) => module.AdminModule),
-    canLoad: [adminAuthGuard],
     canActivate: [adminAuthGuard],
   },
   { path: '**', component: PageNotFoundComponent },

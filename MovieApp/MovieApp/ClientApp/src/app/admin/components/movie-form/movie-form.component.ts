@@ -9,6 +9,7 @@ import { AddMovieService } from 'src/app/services/add-movie.service';
 import { FetchMovielistService } from 'src/app/services/fetch-movielist.service';
 import { UpdateMovieService } from 'src/app/services/update-movie.service';
 import { MovieHelperService } from 'src/app/services/movie-helper.service';
+import { ToastUtility } from '@syncfusion/ej2-notifications';
 
 @Component({
   selector: 'app-movie-form',
@@ -19,10 +20,10 @@ export class MovieFormComponent implements OnInit, OnDestroy {
   protected movieForm!: FormGroup<MovieForm>;
   protected formTitle = 'Add';
   private destroyed$ = new ReplaySubject<void>(1);
-  private formData = new FormData();
   movieId!: number;
-  posterImagePath!: string | ArrayBuffer | null;
-  files = '';
+  posterPreview!: ArrayBuffer | string | null;
+  posterFile = '';
+  moviePosterPath = '';
   public fields: Object = { text: 'genreName', value: 'genreName' };
   protected submitted = false;
 
@@ -56,23 +57,20 @@ export class MovieFormComponent implements OnInit, OnDestroy {
     }
 
     if (this.movieId) {
-      this.editMovieDetails();
+      this.updateMovie();
     } else {
       this.addMovie();
     }
   }
 
   uploadPoster(args: any) {
-    const imageFile = args.filesData[0];
-    this.files = args.filesData;
     const reader = new FileReader();
-    reader.readAsDataURL(imageFile.rawFile);
-    reader.onload = (myevent) => {
+    reader.readAsDataURL(args.filesData[0].rawFile);
+    reader.onloadend = (myevent) => {
       if (myevent.target?.result != null) {
-        this.posterImagePath = (myevent.target as FileReader).result;
+        this.posterPreview = myevent.target.result;
+        this.posterFile = (this.posterPreview as string).split(',')[1];
       }
-
-      // console.log(btoa(this.posterImagePath.toString()));
     };
   }
 
@@ -132,10 +130,12 @@ export class MovieFormComponent implements OnInit, OnDestroy {
           }
         },
         error: (error) => {
-          //   TODO: implement snackbar here
-          // this.snackBarService.showSnackBar(
-          //   'Error ocurred while fetching movie data'
-          // );
+          ToastUtility.show({
+            content:
+              'Error ocurred while fetching movie data. Please reload the page.',
+            position: { X: 'Right', Y: 'Top' },
+            cssClass: 'e-toast-danger',
+          });
           console.error('Error ocurred while fetching movie data : ', error);
         },
       });
@@ -151,21 +151,20 @@ export class MovieFormComponent implements OnInit, OnDestroy {
       rating: movieFormData.rating,
       overview: movieFormData.overview,
     });
-    this.posterImagePath = '/Poster/' + movieFormData.posterPath;
+    this.moviePosterPath = movieFormData.posterPath;
+    this.posterPreview = '/Poster/' + this.moviePosterPath;
   }
 
   private addMovie() {
     const movieData: Movie = {
       movieId: this.movieForm.controls.movieId.value,
       title: this.movieForm.controls.title.value,
-      duration: 123,
-      rating: 2,
+      duration: Number(this.movieForm.controls.duration.value),
+      rating: Number(this.movieForm.controls.rating.value),
       genre: this.movieForm.controls.genre.value,
       language: this.movieForm.controls.language.value,
       overview: this.movieForm.controls.overview.value,
-      posterPath: this.posterImagePath
-        ? btoa(this.posterImagePath.toString())
-        : '',
+      posterPath: this.posterFile,
     };
 
     this.addMovieService
@@ -179,19 +178,31 @@ export class MovieFormComponent implements OnInit, OnDestroy {
           this.navigateToAdminPanel();
         },
         error: (error) => {
-          this.movieForm.reset();
-          // Add a toaster
-          // this.snackBarService.showSnackBar(
-          //   'Error ocurred while adding movie data'
-          // );
+          ToastUtility.show({
+            content: 'Error ocurred while adding movie data.',
+            position: { X: 'Right', Y: 'Top' },
+            cssClass: 'e-toast-danger',
+          });
           console.error('Error ocurred while adding movie data : ', error);
         },
       });
   }
 
-  private editMovieDetails() {
+  private updateMovie() {
+    const movieData: Movie = {
+      movieId: this.movieForm.controls.movieId.value,
+      title: this.movieForm.controls.title.value,
+      duration: Number(this.movieForm.controls.duration.value),
+      rating: Number(this.movieForm.controls.rating.value),
+      genre: this.movieForm.controls.genre.value,
+      language: this.movieForm.controls.language.value,
+      overview: this.movieForm.controls.overview.value,
+      posterPath:
+        this.posterFile !== '' ? this.posterFile : this.moviePosterPath,
+    };
+
     this.updateMovieService
-      .mutate({ movieData: this.formData })
+      .mutate({ movieData: movieData })
       .pipe(
         switchMap(() => this.fetchMovielistService.watch().refetch()),
         takeUntil(this.destroyed$)
@@ -201,9 +212,11 @@ export class MovieFormComponent implements OnInit, OnDestroy {
           this.navigateToAdminPanel();
         },
         error: (error) => {
-          // this.snackBarService.showSnackBar(
-          //   'Error ocurred while updating movie data'
-          // );
+          ToastUtility.show({
+            content: 'Error ocurred while updating movie data.',
+            position: { X: 'Right', Y: 'Top' },
+            cssClass: 'e-toast-danger',
+          });
           console.error('Error ocurred while updating movie data : ', error);
         },
       });

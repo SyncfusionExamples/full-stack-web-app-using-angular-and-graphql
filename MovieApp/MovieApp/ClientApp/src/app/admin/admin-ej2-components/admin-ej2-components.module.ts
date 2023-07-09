@@ -10,6 +10,7 @@ import {
   SortService,
   PageService,
   SearchService,
+  ToolbarService,
 } from '@syncfusion/ej2-angular-grids';
 import { TooltipModule } from '@syncfusion/ej2-angular-popups';
 import { DropDownListModule } from '@syncfusion/ej2-angular-dropdowns';
@@ -28,6 +29,6 @@ const importedModules = [
 @NgModule({
   imports: [CommonModule, importedModules],
   exports: importedModules,
-  providers: [PageService, SortService, SearchService],
+  providers: [PageService, SortService, SearchService, ToolbarService],
 })
 export class AdminEj2ComponentsModule {}

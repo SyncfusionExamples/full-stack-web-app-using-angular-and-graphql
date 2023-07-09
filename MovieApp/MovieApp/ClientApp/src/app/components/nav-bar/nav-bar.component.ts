@@ -34,7 +34,6 @@ export class NavBarComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptionService.userData$
-      .asObservable()
       .pipe(
         switchMap((user: User) => {
           const userId = user.userId;

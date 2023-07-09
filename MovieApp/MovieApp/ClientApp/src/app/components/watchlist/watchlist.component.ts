@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { EMPTY, ReplaySubject, switchMap, takeUntil } from 'rxjs';
 import { SubscriptionService } from 'src/app/services/subscription.service';
 import { WatchlistService } from 'src/app/services/watchlist.service';
@@ -9,7 +9,7 @@ import { ToastUtility } from '@syncfusion/ej2-notifications';
   templateUrl: './watchlist.component.html',
   styleUrls: ['./watchlist.component.css'],
 })
-export class WatchlistComponent {
+export class WatchlistComponent implements OnDestroy {
   private destroyed$ = new ReplaySubject<void>(1);
   watchlistItems$ = this.subscriptionService.watchlistItem$;
 
@@ -42,5 +42,10 @@ export class WatchlistComponent {
           console.error('Error ocurred while deleting the Watchlist : ', error);
         },
       });
+  }
+
+  ngOnDestroy(): void {
+    this.destroyed$.next();
+    this.destroyed$.complete();
   }
 }

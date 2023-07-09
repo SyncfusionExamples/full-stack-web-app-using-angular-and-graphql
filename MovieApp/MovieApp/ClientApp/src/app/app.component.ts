@@ -7,8 +7,10 @@ import { AuthenticationService } from './services/authentication.service';
 })
 export class AppComponent {
   constructor(private readonly authService: AuthenticationService) {
-    if (localStorage.getItem('authToken')) {
-      this.authService.setUserDetails();
+    const authToken = localStorage.getItem('authToken');
+
+    if (authToken) {
+      this.authService.setUserDetails(authToken);
     }
   }
 }
