@@ -8,7 +8,7 @@ import { Component, Input } from '@angular/core';
 export class MovieRatingComponent {
   rating = '';
 
-  @Input() set movieRating(rating: number) {
+  @Input({ required: true }) set movieRating(rating: number) {
     this.rating = rating.toPrecision(2);
   }
 }

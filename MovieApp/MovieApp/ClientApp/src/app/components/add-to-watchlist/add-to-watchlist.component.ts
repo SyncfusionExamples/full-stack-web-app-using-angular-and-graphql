@@ -11,7 +11,7 @@ import { ToastUtility } from '@syncfusion/ej2-notifications';
   styleUrls: ['./add-to-watchlist.component.css'],
 })
 export class AddToWatchlistComponent implements OnChanges {
-  @Input()
+  @Input({ required: true })
   movieId = 0;
 
   toggle = false;
@@ -38,7 +38,6 @@ export class AddToWatchlistComponent implements OnChanges {
     this.setButtonText();
 
     this.subscriptionService.userData$
-      .asObservable()
       .pipe(
         switchMap((user) => {
           const userId = user.userId;

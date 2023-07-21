@@ -7,7 +7,7 @@ import { Movie } from 'src/app/models/movie';
   styleUrls: ['./movie-card.component.css'],
 })
 export class MovieCardComponent {
-  @Input()
+  @Input({ required: true })
   movie!: Movie;
 
   isActive = false;
