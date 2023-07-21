@@ -13,8 +13,8 @@ A full-stack web application for managing movie data, created with ASP.NET Core,
 
 ## Steps to run the app
 
-- Clone the Repo
-- Scaffold and seed the initial data using the DBScript
+- Clone this repository.
+- Create the database assets using the [DBScript](https://github.com/SyncfusionExamples/full-stack-web-app-using-angular-and-graphql/blob/master/DBScript/MovieDBscript.sql).
 - Put your own connection string in the [appsettings.json](https://github.com/SyncfusionExamples/full-stack-web-app-using-angular-and-graphql/blob/master/MovieApp/MovieApp/appsettings.json) file.
 - Build and launch the application from Visual Studio.
 
