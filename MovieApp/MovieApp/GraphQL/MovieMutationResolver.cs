@@ -1,10 +1,6 @@
-﻿using Azure.Core;
-using HotChocolate.Authorization;
+﻿using HotChocolate.Authorization;
 using MovieApp.Interfaces;
 using MovieApp.Models;
-using System.IO;
-using System.IO.Pipes;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace MovieApp.GraphQL
 {

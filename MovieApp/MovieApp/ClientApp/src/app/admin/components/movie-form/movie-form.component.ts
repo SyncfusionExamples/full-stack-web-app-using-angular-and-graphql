@@ -175,6 +175,11 @@ export class MovieFormComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: () => {
+          ToastUtility.show({
+            content: 'The movie data is added successfully.',
+            position: { X: 'Right', Y: 'Top' },
+            cssClass: 'e-toast-success',
+          });
           this.navigateToAdminPanel();
         },
         error: (error) => {
@@ -209,6 +214,11 @@ export class MovieFormComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: () => {
+          ToastUtility.show({
+            content: 'The movie data is updated successfully.',
+            position: { X: 'Right', Y: 'Top' },
+            cssClass: 'e-toast-success',
+          });
           this.navigateToAdminPanel();
         },
         error: (error) => {

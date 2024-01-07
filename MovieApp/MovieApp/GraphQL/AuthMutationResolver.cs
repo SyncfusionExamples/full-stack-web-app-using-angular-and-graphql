@@ -22,7 +22,7 @@ namespace MovieApp.GraphQL
         }
 
         [GraphQLDescription("Authenticate the user.")]
-        public AuthResponse UserLogin(UserLogin userDetails)
+        public AuthResponse? UserLogin(UserLogin userDetails)
         {
             AuthenticatedUser authenticatedUser = _userService.AuthenticateUser(userDetails);
 
@@ -60,9 +60,8 @@ namespace MovieApp.GraphQL
             }
             else
             {
-                return null;
+                return new RegistrationResponse { IsRegistrationSuccess = false, ErrorMessage = "This User Name is not available." };
             }
-
         }
 
         string GenerateJSONWebToken(AuthenticatedUser userInfo)

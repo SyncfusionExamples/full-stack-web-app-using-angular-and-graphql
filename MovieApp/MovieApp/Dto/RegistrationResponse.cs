@@ -1,4 +1,4 @@
-﻿namespace MovieApp.Models
+﻿namespace MovieApp.Dto
 {
     public class RegistrationResponse
     {

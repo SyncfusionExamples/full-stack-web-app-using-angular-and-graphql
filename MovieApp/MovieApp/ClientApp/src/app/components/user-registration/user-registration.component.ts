@@ -6,6 +6,7 @@ import { UserRegistration } from 'src/app/models/userRegistration';
 import { UserRegistrationForm } from 'src/app/models/userRegistrationForm';
 import { CustomFormValidatorService } from 'src/app/services/custom-form-validator.service';
 import { RegistrationService } from 'src/app/services/registration.service';
+import { ToastUtility } from '@syncfusion/ej2-notifications';
 
 @Component({
   selector: 'app-user-registration',
@@ -70,15 +71,23 @@ export class UserRegistrationComponent {
         })
         .pipe(takeUntil(this.destroyed$))
         .subscribe({
-          next: () => {
-            this.router.navigate(['/login']);
-          },
-          error: (error) => {
-            // implemnt snacbar here
-            console.error(
-              'error occurred while trying to register a new user : ',
-              error
-            );
+          next: (response) => {
+            if (response.data?.userRegistration.isRegistrationSuccess) {
+              ToastUtility.show({
+                content: 'User registration successfull.',
+                position: { X: 'Right', Y: 'Top' },
+                cssClass: 'e-toast-success',
+              });
+              this.router.navigate(['/login']);
+            } else {
+              this.userRegistrationForm.controls.userName.setErrors({
+                userNameNotAvailable: true,
+              });
+              console.error(
+                'Error ocurred while login : ',
+                response.data?.userRegistration.errorMessage
+              );
+            }
           },
         });
     }

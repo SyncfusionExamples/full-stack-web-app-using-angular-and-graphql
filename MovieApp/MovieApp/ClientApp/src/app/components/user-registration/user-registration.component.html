@@ -63,6 +63,14 @@
             User Name is required.
           </div>
 
+          <div
+            *ngIf="(registrationFormControl.userName.touched || submitted) &&
+            registrationFormControl.userName.errors?.['userNameNotAvailable']"
+            class="e-error"
+          >
+            User Name is not available.
+          </div>
+
           <div class="e-input-section">
             <ejs-textbox
               type="password"

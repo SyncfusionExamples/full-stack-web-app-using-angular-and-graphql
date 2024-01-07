@@ -39,6 +39,7 @@ export const REGISTER_USER = gql`
   mutation register($registrationData: UserRegistrationInput!) {
     userRegistration(registrationData: $registrationData) {
       isRegistrationSuccess
+      errorMessage
     }
   }
 `;

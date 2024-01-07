@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { DialogUtility } from '@syncfusion/ej2-angular-popups';
 import { ReplaySubject, map, switchMap, takeUntil } from 'rxjs';
 import { DeleteMovieService } from 'src/app/services/delete-movie.service';
@@ -11,7 +11,7 @@ import { ToolbarItems } from '@syncfusion/ej2-angular-grids';
   templateUrl: './manage-movies.component.html',
   styleUrls: ['./manage-movies.component.css'],
 })
-export class ManageMoviesComponent {
+export class ManageMoviesComponent implements OnDestroy {
   public dialogObj: any;
   private destroyed$ = new ReplaySubject<void>(1);
   public initialPage = { pageSizes: true };
