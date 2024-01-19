@@ -74,7 +74,7 @@ export class UserRegistrationComponent {
           next: (response) => {
             if (response.data?.userRegistration.isRegistrationSuccess) {
               ToastUtility.show({
-                content: 'User registration successfull.',
+                content: 'User registration successful.',
                 position: { X: 'Right', Y: 'Top' },
                 cssClass: 'e-toast-success',
               });
@@ -84,7 +84,7 @@ export class UserRegistrationComponent {
                 userNameNotAvailable: true,
               });
               console.error(
-                'Error ocurred while login : ',
+                'Error occurred during registration : ',
                 response.data?.userRegistration.errorMessage
               );
             }

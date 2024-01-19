@@ -9,52 +9,50 @@
   </button>
   <div class="e-appbar-spacer"></div>
 
-  <ng-container *ngIf="userData$ | async as userData">
-    <button
-      ejs-button
-      [isToggle]="true"
-      cssClass="e-inherit e-round e-small"
-      *ngIf="userData.isLoggedIn"
-      [routerLink]="['/watchlist']"
-      iconCss="e-icons e-bookmark e-medium"
-      class="watchlist-btn"
+  <button
+    ejs-button
+    [isToggle]="true"
+    cssClass="e-inherit e-round e-small"
+    *ngIf="authenticatedUser.isLoggedIn"
+    [routerLink]="['/watchlist']"
+    iconCss="e-icons e-bookmark e-medium"
+    class="watchlist-btn"
+  >
+    <span
+      class="e-badge e-badge-warning e-badge-notification e-badge-overlap e-badge-circle"
+      >{{ watchlistItemcount$ | async }}</span
     >
-      <span
-        class="e-badge e-badge-warning e-badge-notification e-badge-overlap e-badge-circle"
-        >{{ watchlistItemcount$ | async }}</span
-      >
-    </button>
+  </button>
 
+  <button
+    *ngIf="!authenticatedUser.isLoggedIn"
+    ejs-button
+    cssClass="e-inherit"
+    [routerLink]="['/login']"
+    [isToggle]="true"
+  >
+    Login
+  </button>
+
+  <button
+    *ngIf="authenticatedUser.userTypeName == userType.Admin"
+    ejs-button
+    cssClass="e-inherit"
+    [routerLink]="['/admin/movies']"
+    [isToggle]="true"
+  >
+    Admin Panel
+  </button>
+
+  <ng-container *ngIf="authenticatedUser.isLoggedIn">
     <button
-      *ngIf="!userData.isLoggedIn"
-      ejs-button
+      ejs-dropdownbutton
       cssClass="e-inherit"
-      [routerLink]="['/login']"
-      [isToggle]="true"
-    >
-      Login
-    </button>
-
-    <button
-      *ngIf="userData.userTypeName == userType.Admin"
-      ejs-button
-      cssClass="e-inherit"
-      [routerLink]="['/admin/movies']"
-      [isToggle]="true"
-    >
-      Admin Panel
-    </button>
-
-    <ng-container *ngIf="userData.isLoggedIn">
-      <button
-        ejs-dropdownbutton
-        cssClass="e-inherit"
-        iconCss="e-icons e-people"
-        [items]="items"
-        content="{{ userData.username }}"
-        (select)="clickActionItem($event)"
-      ></button>
-    </ng-container>
+      iconCss="e-icons e-people"
+      [items]="items"
+      content="{{ authenticatedUser.username }}"
+      (select)="clickActionItem($event)"
+    ></button>
   </ng-container>
 
   <a

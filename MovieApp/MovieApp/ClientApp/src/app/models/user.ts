@@ -15,7 +15,3 @@ export class User {
     this.isLoggedIn = false;
   }
 }
-
-export type UserNameAvailableType = {
-  isUserNameAvailable: boolean;
-};

@@ -15,7 +15,7 @@ import { ItemModel, MenuEventArgs } from '@syncfusion/ej2-angular-splitbuttons';
 })
 export class NavBarComponent implements OnInit, OnDestroy {
   readonly userType = UserType;
-  readonly userData$ = this.subscriptionService.userData$;
+  authenticatedUser = new User();
   readonly watchlistItemcount$ = this.subscriptionService.watchlistItemcount$;
   private destroyed$ = new ReplaySubject<void>(1);
 
@@ -36,9 +36,11 @@ export class NavBarComponent implements OnInit, OnDestroy {
     this.subscriptionService.userData$
       .pipe(
         switchMap((user: User) => {
-          const userId = user.userId;
-          if (userId > 0) {
-            return this.watchlistService.getWatchlistItems(userId);
+          this.authenticatedUser = user;
+          if (this.authenticatedUser.userId > 0) {
+            return this.watchlistService.getWatchlistItems(
+              this.authenticatedUser.userId
+            );
           } else {
             return EMPTY;
           }
@@ -47,7 +49,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         error: (error) => {
-          console.error('Error ocurred while setting the Watchlist : ', error);
+          console.error('Error occurred while setting the Watchlist : ', error);
         },
       });
   }
