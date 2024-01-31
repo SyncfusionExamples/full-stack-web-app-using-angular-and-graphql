@@ -223,11 +223,11 @@ export class MovieFormComponent implements OnInit, OnDestroy {
         },
         error: (error) => {
           ToastUtility.show({
-            content: 'Error ocurred while updating movie data.',
+            content: 'Error occurred while updating movie data.',
             position: { X: 'Right', Y: 'Top' },
             cssClass: 'e-toast-danger',
           });
-          console.error('Error ocurred while updating movie data : ', error);
+          console.error('Error occurred  while updating movie data : ', error);
         },
       });
   }
