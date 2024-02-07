@@ -55,7 +55,7 @@ export class LoginComponent implements OnDestroy {
             this.loginForm.setErrors({
               invalidLogin: true,
             });
-            console.error('Error ocurred while login : ', error);
+            console.error('Error occurred while login : ', error);
           },
         });
     }

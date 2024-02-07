@@ -68,7 +68,7 @@ export class AddToWatchlistComponent implements OnChanges {
           }
         },
         error: (error) => {
-          console.error('Error ocurred while setting the Watchlist : ', error);
+          console.error('Error occurred while setting the Watchlist : ', error);
         },
       });
   }

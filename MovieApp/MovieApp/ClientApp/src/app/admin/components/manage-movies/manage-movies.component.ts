@@ -62,7 +62,7 @@ export class ManageMoviesComponent implements OnDestroy {
         error: () => {
           this.confirmCancelAction();
           ToastUtility.show({
-            content: 'Error ocurred while deleting the movie data.',
+            content: 'Error occurred while deleting the movie data.',
             position: { X: 'Right', Y: 'Top' },
             cssClass: 'e-toast-danger',
           });

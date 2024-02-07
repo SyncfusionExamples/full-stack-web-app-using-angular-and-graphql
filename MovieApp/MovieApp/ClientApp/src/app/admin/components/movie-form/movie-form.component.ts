@@ -132,11 +132,11 @@ export class MovieFormComponent implements OnInit, OnDestroy {
         error: (error) => {
           ToastUtility.show({
             content:
-              'Error ocurred while fetching movie data. Please reload the page.',
+              'Error occurred while fetching movie data. Please reload the page.',
             position: { X: 'Right', Y: 'Top' },
             cssClass: 'e-toast-danger',
           });
-          console.error('Error ocurred while fetching movie data : ', error);
+          console.error('Error occurred while fetching movie data : ', error);
         },
       });
   }
@@ -184,11 +184,11 @@ export class MovieFormComponent implements OnInit, OnDestroy {
         },
         error: (error) => {
           ToastUtility.show({
-            content: 'Error ocurred while adding movie data.',
+            content: 'Error occurred while adding movie data.',
             position: { X: 'Right', Y: 'Top' },
             cssClass: 'e-toast-danger',
           });
-          console.error('Error ocurred while adding movie data : ', error);
+          console.error('Error occurred while adding movie data : ', error);
         },
       });
   }

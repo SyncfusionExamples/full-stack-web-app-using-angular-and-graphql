@@ -39,7 +39,10 @@ export class WatchlistComponent implements OnDestroy {
           });
         },
         error: (error) => {
-          console.error('Error ocurred while deleting the Watchlist : ', error);
+          console.error(
+            'Error occurred while deleting the Watchlist : ',
+            error
+          );
         },
       });
   }
