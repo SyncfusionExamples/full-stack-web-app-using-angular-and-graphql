@@ -1,5 +1,5 @@
-<ng-container *ngIf="vm$ | async as vm; else loading"
-  ><div class="row pt-3">
+<ng-container *ngIf="vm$ | async as vm; else loading">
+  <div class="row pt-3">
     <div class="col-md-3 col-sm-12 d-flex justify-content-center">
       <div class="filter-container">
         <app-movie-filter></app-movie-filter>
@@ -25,7 +25,7 @@
 
 <ng-template #loading>
   <div class="d-flex justify-content-center mt-4">
-    <!-- <mat-spinner></mat-spinner> -->
+    <h2>Loading...</h2>
   </div>
 </ng-template>
 
