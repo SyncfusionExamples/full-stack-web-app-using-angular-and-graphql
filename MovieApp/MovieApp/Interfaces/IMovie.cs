@@ -16,6 +16,6 @@ namespace MovieApp.Interfaces
 
         Task<List<Movie>> GetSimilarMovies(int movieId);
 
-        Task<List<Movie>> GetMoviesAvailableInWatchlist(string watchlistID);
+        Task<List<Movie>> GetMoviesAvailableInWatchlist(string watchlistId);
     }
 }

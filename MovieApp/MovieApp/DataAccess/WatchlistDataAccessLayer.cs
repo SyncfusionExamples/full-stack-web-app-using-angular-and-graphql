@@ -71,7 +71,7 @@ namespace MovieApp.DataAccess
                     foreach (WatchlistItem item in watchlistItem)
                     {
                         _dbContext.WatchlistItems.Remove(item);
-                        _dbContext.SaveChanges();
+                        await _dbContext.SaveChangesAsync();
                     }
                 }
             }
