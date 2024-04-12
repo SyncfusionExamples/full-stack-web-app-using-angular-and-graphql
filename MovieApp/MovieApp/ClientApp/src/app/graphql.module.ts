@@ -9,7 +9,7 @@ import {
 import { setContext } from '@apollo/client/link/context';
 import { HttpClientModule } from '@angular/common/http';
 
-const uri = 'https://localhost:7214/graphql'; // <-- add the URL of the GraphQL server here
+const uri = 'graphql'; // <-- add the URL of the GraphQL server here
 export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
   const auth = setContext(() => {
     const headerToken = localStorage.getItem('authToken');
